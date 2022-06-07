@@ -9,4 +9,6 @@
     <string name="switch_on">当前切换为开</string>
     <string name="switch_off">当前切换为关</string>
     <string name="undo">取消</string>
+    <string name="hint">在此输入姓名</string>
+
 </resources>
