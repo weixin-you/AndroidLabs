@@ -8,5 +8,7 @@
     <string name="switch_on">The switch is now on</string>
     <string name="switch_off">The switch is now off</string>
     <string name="undo">Undo</string>
+    <string name="hint">Enter Name here</string>
+
 
 </resources>
