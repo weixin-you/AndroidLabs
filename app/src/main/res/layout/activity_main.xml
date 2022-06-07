@@ -2,25 +2,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/firstLevel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="73dp"
-        android:layout_height="62dp"
-        android:text="@string/hello_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ButtonText" />
+        android:text="@string/app_name"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:id="@+id/button2"
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:text="@string/here_button" />
+
+        <CheckBox
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:id="@+id/checkBox"
+            android:layout_width="277dp"
+            android:layout_height="wrap_content"
+            android:text="@string/checkbox" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/country_logo"
+            android:gravity="fill"
+            app:srcCompat="@drawable/flag" />
+
+        <Switch
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/switch_button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name Here"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
