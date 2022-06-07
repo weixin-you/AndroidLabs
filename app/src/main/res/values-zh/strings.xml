@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Lab 2 GUI</string>
+    <string name="app_name">实验 2 GUI</string>
     <string name="here_button">单击这儿</string>
     <string name="checkbox">单选框</string>
     <string name="country_logo">国家图标</string>
@@ -10,5 +10,6 @@
     <string name="switch_off">当前切换为关</string>
     <string name="undo">取消</string>
     <string name="hint">在此输入姓名</string>
+
 
 </resources>
