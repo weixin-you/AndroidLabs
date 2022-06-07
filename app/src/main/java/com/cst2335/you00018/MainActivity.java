@@ -8,8 +8,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -19,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_constraint);
         Button btn = findViewById(R.id.button2);
         btn.setOnClickListener(e -> handleBtnClick());
-        CompoundButton switchBtn = findViewById(R.id.switch1);
+        CompoundButton switchBtn = findViewById(R.id.switch2);
         switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 Snackbar.make(buttonView,getResources().getString(R.string.switch_on), LENGTH_LONG).setAction(getResources().getString(R.string.undo),click->buttonView.setChecked(!isChecked)).show();
