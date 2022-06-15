@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">实验 2 GUI</string>
-    <string name="here_button">单击这儿</string>
-    <string name="checkbox">单选框</string>
-    <string name="country_logo">国家图标</string>
-    <string name="switch_button">切换按钮</string>
-    <string name="toast_message">更多信息</string>
-    <string name="switch_on">当前切换为开</string>
-    <string name="switch_off">当前切换为关</string>
-    <string name="undo">取消</string>
-    <string name="hint">在此输入姓名</string>
+    <string name="app_name">实验 3</string>
+    <string name="email_address">输入你的邮箱地址</string>
+    <string name="type_email">在此输入邮箱</string>
+    <string name="password">输入密码</string>
+    <string name="login">登录</string>
+    <string name="profile">个人概况</string>
+    <string name="name">你的名字</string>
+    <string name="enter_name">输入你的名字</string>
+    <string name="your_email">你的邮箱</string>
+    <string name="enter_email">输入你的邮箱</string>
+    <string name="picture">你的照片</string>
+    <string name="take_picture">单击拍照</string>
+
 
 
 </resources>

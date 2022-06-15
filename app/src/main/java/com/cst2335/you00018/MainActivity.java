@@ -5,38 +5,40 @@ import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String EMAIL="EMAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_constraint);
-        Button btn = findViewById(R.id.button2);
-        btn.setOnClickListener(e -> handleBtnClick());
-        CompoundButton switchBtn = findViewById(R.id.switch2);
-        switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                Snackbar.make(buttonView,getResources().getString(R.string.switch_on), LENGTH_LONG).setAction(getResources().getString(R.string.undo),click->buttonView.setChecked(!isChecked)).show();
-            }
-            else{
-                Snackbar.make(buttonView,getResources().getString(R.string.switch_off), LENGTH_LONG).setAction(getResources().getString(R.string.undo),click->buttonView.setChecked(!isChecked)).show();
-            }
-        });
-    }
+        setContentView(R.layout.activity_main_linear);
+        EditText typeEmail = findViewById(R.id.type_email);
+        SharedPreferences sharedPreferences = getSharedPreferences(EMAIL, Context.MODE_PRIVATE);
+        String preferencesString = sharedPreferences.getString(EMAIL,"");
 
-    public void handleBtnClick(){
-        Context context = getApplicationContext();
-        CharSequence text = getString(R.string.toast_message);
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        typeEmail.setText(preferencesString);
+
+        Button login = findViewById(R.id.login);
+        login.setOnClickListener(click ->{
+            String emailEntered = typeEmail.getText().toString();
+            Intent gotoProfile = new Intent(MainActivity.this,ProfileActivity.class);
+            gotoProfile.putExtra(EMAIL,emailEntered);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(EMAIL,emailEntered);
+            editor.apply();
+            startActivity(gotoProfile);
+        });
     }
 
 }

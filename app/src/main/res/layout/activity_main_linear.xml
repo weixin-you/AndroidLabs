@@ -9,75 +9,41 @@
     android:orientation="vertical">
 
     <TextView
-        android:textAlignment="center"
-        android:textSize="34sp"
-        android:id="@+id/textView2"
+        android:id="@+id/email_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"/>
+        android:text="@string/email_address"
+        android:textSize="20sp"/>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <EditText
+        android:id="@+id/type_email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:inputType="textEmailAddress"
+        android:hint="@string/type_email"
+        android:textSize="24sp"/>
 
-        <Button
-            android:layout_weight="1"
-            android:gravity="fill"
-            android:id="@+id/button2"
-            android:layout_width="278dp"
-            android:layout_height="wrap_content"
-            android:text="@string/here_button" />
-
-        <CheckBox
-            android:layout_weight="1"
-            android:gravity="fill"
-            android:id="@+id/checkBox"
-            android:layout_width="277dp"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/password"
+        android:textSize="20sp"/>
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/country_logo"
-            android:gravity="fill"
-            app:srcCompat="@drawable/flag" />
-
-        <Switch
-            android:layout_weight="1"
-            android:gravity="fill"
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="@string/switch_button" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <EditText
+        android:id="@+id/type_password"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:inputType="textPassword"
+        android:textSize="24sp"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-        <EditText
-            android:layout_weight="1"
-            android:gravity="fill"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textSize="24sp" />
 
 
 </LinearLayout>
