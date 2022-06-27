@@ -12,6 +12,10 @@
     <string name="enter_email">输入你的邮箱</string>
     <string name="picture">你的照片</string>
     <string name="take_picture">单击拍照</string>
+    <string name="send_button">发送</string>
+    <string name="receive_button">接收</string>
+    <string name="chat_button">聊天</string>
+    <string name="type_hint">在此输入</string>
 
 
 

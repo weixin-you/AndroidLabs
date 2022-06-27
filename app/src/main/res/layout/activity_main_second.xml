@@ -61,4 +61,11 @@
         android:text="@string/take_picture"
         android:textSize="20sp"/>
 
+
+    <Button
+        android:id="@+id/chat_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/chat_button" />
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_second);
         Log.e(TAG, "onCreate");
-
         ImageButton imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(click ->{
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -34,9 +34,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         EditText emailEditText = findViewById(R.id.enterEmail);
         Intent fromMain = getIntent();
-
         emailEditText.setText(fromMain.getStringExtra(MainActivity.EMAIL));
-
+        Button goToChatroom = findViewById(R.id.chat_button);
+        goToChatroom.setOnClickListener(click -> {
+            Intent gotoChatroom = new Intent(ProfileActivity.this,ChatRoomActivity.class);
+            startActivity(gotoChatroom);
+        });
     }
 
     ActivityResultLauncher<Intent> myPictureTakerLauncher = registerForActivityResult(
