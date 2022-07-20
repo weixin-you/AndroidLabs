@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">实验 3</string>
+    <string name="app_name">实验 5</string>
     <string name="email_address">输入你的邮箱地址</string>
     <string name="type_email">在此输入邮箱</string>
     <string name="password">输入密码</string>
