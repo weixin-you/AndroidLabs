@@ -40,6 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
             Intent gotoChatroom = new Intent(ProfileActivity.this,ChatRoomActivity.class);
             startActivity(gotoChatroom);
         });
+
+        Button goToWeatherForecast = findViewById(R.id.weatherForecast_button);
+        goToWeatherForecast.setOnClickListener(click -> {
+            Intent goWeatherForecast = new Intent(ProfileActivity.this,WeatherForecast.class);
+            startActivity(goWeatherForecast);
+        });
     }
 
     ActivityResultLauncher<Intent> myPictureTakerLauncher = registerForActivityResult(

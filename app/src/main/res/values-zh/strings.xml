@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">实验 5</string>
+    <string name="app_name">实验 6</string>
     <string name="email_address">输入你的邮箱地址</string>
     <string name="type_email">在此输入邮箱</string>
     <string name="password">输入密码</string>
@@ -15,7 +15,12 @@
     <string name="send_button">发送</string>
     <string name="receive_button">接收</string>
     <string name="chat_button">聊天</string>
+    <string name="weatherForecast_button">天气预报</string>
     <string name="type_hint">在此输入</string>
+    <string name="max_temperature">最高温度</string>
+    <string name="min_temperature">最低温度</string>
+    <string name="current_temperature">当前温度</string>
+    <string name="uv_rating">紫外线强度</string>
 
 
 

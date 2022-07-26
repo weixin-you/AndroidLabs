@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WeatherForecast">
+
+    <ImageView
+        android:id="@+id/image_weather"
+        android:layout_width="match_parent"
+        android:layout_height="234dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="313dp" />
+
+    <TextView
+        android:id="@+id/text_curr_temp"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="@string/current_temperature" />
+
+    <TextView
+        android:id="@+id/text_min_temp"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:text="@string/min_temperature" />
+
+    <TextView
+        android:id="@+id/text_max_temp"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:text="@string/max_temperature" />
+
+    <TextView
+        android:id="@+id/text_uv_rating"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:text="@string/uv_rating" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="161dp" />
+
+</LinearLayout>
