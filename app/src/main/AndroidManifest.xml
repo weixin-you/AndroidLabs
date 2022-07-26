@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cst2335.you00018">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.type.watch"/>
 
     <application
         android:allowBackup="true"

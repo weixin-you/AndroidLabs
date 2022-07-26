@@ -20,24 +20,28 @@
         android:id="@+id/text_curr_temp"
         android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:layout_gravity="center"
         android:text="@string/current_temperature" />
 
     <TextView
         android:id="@+id/text_min_temp"
         android:layout_width="match_parent"
         android:layout_height="53dp"
+        android:layout_gravity="center"
         android:text="@string/min_temperature" />
 
     <TextView
         android:id="@+id/text_max_temp"
         android:layout_width="match_parent"
         android:layout_height="57dp"
+        android:layout_gravity="center"
         android:text="@string/max_temperature" />
 
     <TextView
         android:id="@+id/text_uv_rating"
         android:layout_width="match_parent"
         android:layout_height="57dp"
+        android:layout_gravity="center"
         android:text="@string/uv_rating" />
 
     <ProgressBar
