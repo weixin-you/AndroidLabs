@@ -24,13 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_second);
         Log.e(TAG, "onCreate");
-        ImageButton imageButton = findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(click ->{
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                myPictureTakerLauncher.launch(takePictureIntent);
-            }
-        });
 
         EditText emailEditText = findViewById(R.id.enterEmail);
         Intent fromMain = getIntent();
@@ -55,8 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     Bitmap imgBitMap = (Bitmap) data.getExtras().get("data");
                     ImageView imgView;
-                    imgView=(ImageView)findViewById(R.id.imageButton);
-                    imgView.setImageBitmap(imgBitMap);
                 }
                 else if(result.getResultCode() == Activity.RESULT_CANCELED)
                     Log.i(TAG, "User refused to capture a picture.");
