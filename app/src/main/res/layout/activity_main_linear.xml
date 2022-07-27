@@ -6,6 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
     android:orientation="vertical">
 
     <TextView
@@ -21,6 +25,10 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/type_email"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:textSize="24sp"/>
 
     <TextView
@@ -36,6 +44,10 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:textSize="24sp"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
@@ -43,6 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:textSize="24sp" />
 
 

@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
     tools:context=".ProfileActivity">
 
 
@@ -25,6 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_name"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:textSize="24sp"/>
 
     <TextView
@@ -39,6 +47,10 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/enter_email"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:textSize="24sp"/>
 
     <TextView
@@ -66,12 +78,20 @@
         android:id="@+id/chat_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:text="@string/chat_button" />
 
     <Button
         android:id="@+id/weatherForecast_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nextFocusDown="@id/item1"
+        android:nextFocusUp="@id/item2"
+        android:nextFocusRight="@id/item3"
+        android:nextFocusLeft="@id/item4"
         android:text="@string/weatherForecast_button" />
 
 </LinearLayout>
