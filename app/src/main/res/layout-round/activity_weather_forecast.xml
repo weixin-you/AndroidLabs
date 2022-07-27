@@ -10,11 +10,12 @@
     <ImageView
         android:id="@+id/image_weather"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="31dp" />
+        android:layout_gravity="center"
+        tools:layout_editor_absoluteY="91dp" />
 
     <TextView
         android:id="@+id/text_curr_temp"
