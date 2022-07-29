@@ -148,7 +148,7 @@ public class WeatherForecast extends AppCompatActivity {
                     Log.i(ACTIVITY_NAME, "Looking for file" + iconName + ".png");
                     Log.i(ACTIVITY_NAME, "Weather image does not exist, need to download");
 
-                    URL imageUrl = new URL("http://openweathermap.org/img/w/" + iconName + ".png");
+                    URL imageUrl = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
                     HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection();
                     connection.connect();
                     int responseCode = connection.getResponseCode();
