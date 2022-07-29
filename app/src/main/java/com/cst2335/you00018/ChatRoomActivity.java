@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,23 +23,40 @@ import java.util.Arrays;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoomActivity";
+    private static final String ITEM_SELECTED = "ITEM";
+    private static final String ITEM_POSITION = "POSITION";
+    private static final String ITEM_ID = "ID";
+    private static final boolean IS_SENT = false;
 
     MyOpenHelper myOpener;
     SQLiteDatabase database;
 
-    public static class Messages {
-        String inputMessage;
-        public Boolean sendOrReceive;
+    public class Messages {
+        String message;
+        Boolean isSend;
         long id;
 
-        private Messages(String inputMessage, Boolean sendOrReceive, long idIn) {
-            this.inputMessage = inputMessage;
-            this.sendOrReceive = sendOrReceive;
-            this.id=idIn;
+        /*Constructor*/
+        public Messages(String msg, Boolean is, long id) {
+            this.message = msg;
+            this.isSend = is;
+            this.id = id;
+        }
+
+        public String getText() {
+            return message;
         }
 
         public long getId() {
             return id;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public Boolean getSorR() {
+            return isSend;
         }
     }
     ArrayList<Messages> messagesList = new ArrayList<>();
@@ -49,6 +67,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        boolean isTablet = findViewById(R.id.fragmentItem) != null;
 
         myOpener = new MyOpenHelper( this );
         //open database
@@ -69,6 +88,33 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         ListView myList = findViewById(R.id.listView);
         myList.setAdapter(myAdapter = new MyListAdapter());
+
+        myList.setOnItemClickListener((list, view, position, id) -> {
+
+
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_SELECTED, messagesList.get(position).getText());
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
+            dataToPass.putBoolean(String.valueOf(IS_SENT), messagesList.get(position).getSorR());
+
+
+            if (isTablet) {
+                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                dFragment.setArguments(dataToPass); //pass it a bundle for information
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentItem, dFragment) //Add the fragment in FrameLayout
+                        .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+            } else //isPhone
+            {
+                Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+        });
+        
         EditText editText = findViewById(R.id.type_hint);
         Button sendButton = findViewById(R.id.send_button);
         sendButton.setOnClickListener( click -> {
@@ -166,12 +212,12 @@ public class ChatRoomActivity extends AppCompatActivity {
     public class MyListAdapter extends BaseAdapter {
 
         public int getCount() { return messagesList.size();}
-        public Object getItem(int position) { return messagesList.get(position).inputMessage; }
+        public Object getItem(int position) { return messagesList.get(position).message; }
         public long getItemId(int position) { return (long) position; }
         public View getView(int position, View old, ViewGroup parent)
         {
             LayoutInflater inflater = getLayoutInflater();
-            if (messagesList.get(position).sendOrReceive){
+            if (messagesList.get(position).isSend){
                 View view1 = inflater.inflate(R.layout.send, parent, false);
                 EditText editText1 = view1.findViewById(R.id.text_send);
                 editText1.setText( getItem(position).toString() );

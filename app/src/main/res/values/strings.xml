@@ -20,4 +20,8 @@
     <string name="min_temperature">Min Temperature</string>
     <string name="current_temperature">Current Temperature</string>
     <string name="uv_rating">UV Rating</string>
+    <string name="message_here">Message Here</string>
+    <string name="view_id">ID=</string>
+    <string name="one_send_message">Is a Send Message</string>
+
 </resources>

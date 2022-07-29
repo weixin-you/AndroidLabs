@@ -21,6 +21,9 @@
     <string name="min_temperature">最低温度</string>
     <string name="current_temperature">当前温度</string>
     <string name="uv_rating">紫外线强度</string>
+    <string name="message_here">信息</string>
+    <string name="one_send_message">一条发送信息</string>
+    <string name="view_id">视图 ID</string>
 
 
 
