@@ -16,20 +16,26 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChatRoomActivity extends AppCompatActivity {
-    private static final String TAG = "ChatRoomActivity";
-    private static final String ITEM_SELECTED = "ITEM";
-    private static final String ITEM_POSITION = "POSITION";
-    private static final String ITEM_ID = "ID";
-    private static final boolean IS_SENT = false;
 
-    MyOpenHelper myOpener;
-    SQLiteDatabase database;
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_ID = "ID";
+    public static final Boolean IS_SENT = false;
+    DetailsFragment dFragment = new DetailsFragment();
+
+    ArrayList<Messages> myMessages = new ArrayList<>();
+    private static final String TAG = "ChatRoomActivity";
+    MyListAdapter myAdapter;
+    SQLiteDatabase db;
+    MyOpenHelper MyOpener;
+
 
     public class Messages {
         String message;
@@ -37,9 +43,9 @@ public class ChatRoomActivity extends AppCompatActivity {
         long id;
 
         /*Constructor*/
-        public Messages(String msg, Boolean is, long id) {
-            this.message = msg;
-            this.isSend = is;
+        public Messages(String message, Boolean isSend, long id) {
+            this.message = message;
+            this.isSend = isSend;
             this.id = id;
         }
 
@@ -59,9 +65,11 @@ public class ChatRoomActivity extends AppCompatActivity {
             return isSend;
         }
     }
-    ArrayList<Messages> messagesList = new ArrayList<>();
 
-    MyListAdapter myAdapter;
+
+    //public static FragmentManager fragmentManager;
+    //DetailsFragment tFragment = new DetailsFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,166 +77,228 @@ public class ChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_room);
         boolean isTablet = findViewById(R.id.fragmentItem) != null;
 
-        myOpener = new MyOpenHelper( this );
-        //open database
-        database = myOpener.getWritableDatabase();
-        Cursor results = database.rawQuery( "Select * from " + MyOpenHelper.TABLE_NAME + ";", null );
-        int clmIndex = results.getColumnIndex( MyOpenHelper.COL_ID );
-        int msgIndex = results.getColumnIndex( MyOpenHelper.COL_MESSAGE);
-        int sOrRIndex = results.getColumnIndex( MyOpenHelper.COL_SEND_OR_RECEIVE);
-
-        //returns false if no more data
-        while( results.moveToNext() ) {
-            int id = results.getInt(clmIndex);
-            String message = results.getString( msgIndex );
-            boolean sendOrReceive = results.getInt(sOrRIndex)==1;
-            messagesList.add( new Messages( message,sendOrReceive, id ));
-        }
-
-
+        loadDataFromDatabase();
+        myAdapter = new MyListAdapter();
         ListView myList = findViewById(R.id.listView);
-        myList.setAdapter(myAdapter = new MyListAdapter());
+        myList.setAdapter(myAdapter);
+        Log.i("before", "before listener");
+        Log.i("before", String.valueOf(isTablet));
 
         myList.setOnItemClickListener((list, view, position, id) -> {
-
-
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
-            dataToPass.putString(ITEM_SELECTED, messagesList.get(position).getText());
+            dataToPass.putString(ITEM_SELECTED, myMessages.get(position).getText());
             dataToPass.putInt(ITEM_POSITION, position);
             dataToPass.putLong(ITEM_ID, id);
-            dataToPass.putBoolean(String.valueOf(IS_SENT), messagesList.get(position).getSorR());
-
+            dataToPass.putBoolean(String.valueOf(IS_SENT), myMessages.get(position).getSorR());
+            Log.i("inside", "inside listener");
 
             if (isTablet) {
                 DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                Log.i("test", "get if there");
                 dFragment.setArguments(dataToPass); //pass it a bundle for information
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragmentItem, dFragment) //Add the fragment in FrameLayout
                         .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
-            } else //isPhone
+            } else
             {
+                Log.i("test", "get else there");
                 Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
         });
-        
-        EditText editText = findViewById(R.id.type_hint);
-        Button sendButton = findViewById(R.id.send_button);
-        sendButton.setOnClickListener( click -> {
-            String inputText = editText.getText().toString();
+        Button sendButton = findViewById(R.id.button_send);
+        Button receiveButton = findViewById(R.id.button_receive);
 
-            ContentValues newRow = new ContentValues();
-            //Message column:
-            newRow.put( MyOpenHelper.COL_MESSAGE , inputText );
-            //Send or receive column:
-            newRow.put( MyOpenHelper.COL_SEND_OR_RECEIVE, 1 );
-            //now that columns are full, you insert:
-            long id = database.insert( MyOpenHelper.TABLE_NAME, null, newRow );
+        sendButton.setOnClickListener(click ->
+        {
+            EditText chatMsg = findViewById(R.id.editText);
+            String inputString = chatMsg.getText().toString();
 
-            Log.i(TAG, "Add a row of sending message");
+            ContentValues newRowValues = new ContentValues();
 
-            messagesList.add(new Messages(inputText,true, id));
-            editText.setText("");
+            //put 1 or 0 in the sender column:
+            newRowValues.put(MyOpenHelper.COL_SEND_OR_RECEIVE, 1);
+            newRowValues.put(MyOpenHelper.COL_MESSAGE, inputString);
+
+            //Now insert in the database:
+            long newId = db.insert(MyOpenHelper.TABLE_NAME, null, newRowValues);
+
+
+            myMessages.add(new Messages(inputString, true, newId));
             myAdapter.notifyDataSetChanged();
+            chatMsg.setText("");
+            myList.setSelection(myAdapter.getCount() - 1);
         });
-        Button receiveButton = findViewById(R.id.receive_button);
-        receiveButton.setOnClickListener( click -> {
-            String inputText = editText.getText().toString();
-            ContentValues newRow = new ContentValues();
-            //Message column:
-            newRow.put( MyOpenHelper.COL_MESSAGE , inputText );
-            //Send or receive column:
-            newRow.put(MyOpenHelper.COL_SEND_OR_RECEIVE, 0);
-            //now that columns are full, you insert:
-            long id = database.insert( MyOpenHelper.TABLE_NAME, null, newRow );
-            Log.i(TAG, "Add a row of receiving message");
-            messagesList.add(new Messages(inputText,false, id));
-            editText.setText("");
+        receiveButton.setOnClickListener(click ->
+        {
+            EditText chatMsg = findViewById(R.id.editText);
+            String inputString = chatMsg.getText().toString();
+
+            ContentValues newRowValues = new ContentValues();
+
+            //put 1 or 0 in the sender column:
+            newRowValues.put(MyOpenHelper.COL_SEND_OR_RECEIVE, 0);
+            newRowValues.put(MyOpenHelper.COL_MESSAGE, inputString);
+
+            //Now insert in the database:
+            long newId = db.insert(MyOpenHelper.TABLE_NAME, null, newRowValues);
+
+
+            myMessages.add(new Messages(inputString, false, newId));
             myAdapter.notifyDataSetChanged();
+            chatMsg.setText("");
+            myList.setSelection(myAdapter.getCount() - 1);
         });
 
-        myList.setOnItemLongClickListener( (p, b, pos, id) -> {
-            Messages whatWasClicked = messagesList.get(pos);
+        myList.setOnItemLongClickListener((p, b, pos, id) -> {
+            Messages selectedMessage = myMessages.get(pos);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Do you want to delete this?")
+            alertDialogBuilder.setTitle("Want to delete?")
 
                     //What is the message:
-                    .setMessage("The selected row is:"+ pos+"\n"+"The database id is:"+id)
+                    .setMessage("Do you want to delete this row?")
+
                     //what the Yes button does:
                     .setPositiveButton("Yes", (click, arg) -> {
-                        messagesList.remove(pos);
+                        db.delete(MyOpenHelper.TABLE_NAME, MyOpenHelper.COL_ID+ "= ?", new String[]{Long.toString(selectedMessage.getId())});
+                        myMessages.remove(pos); //remove the contact from contact list
                         myAdapter.notifyDataSetChanged();
-                        database.delete(MyOpenHelper.TABLE_NAME,MyOpenHelper.COL_ID+"=?",new String[]{Long.toString(whatWasClicked.getId())});
                     })
                     //What the No button does:
-                    .setNegativeButton("No", (click, arg) -> { })
+                    .setNegativeButton("No", (click, arg) -> {
+                    })
 
-                    //You can add extra layout elements:
-                    .setView(getLayoutInflater().inflate(R.layout.receive, null) )
 
                     //Show the dialog
                     .create().show();
-
             return true;
         });
 
-        printCursor(results,database.getVersion());
-
     }
 
-    public void printCursor(Cursor c, int inVersion){
-        int columnNumber = c.getColumnCount();
-        String[] columnNames = c.getColumnNames();
-        int rowNumber = c.getCount();
+    public class Message {
 
-        c.moveToFirst();
+        private String msgText;
+        private boolean isSend;
+        private long id;
 
-        while (!c.isAfterLast()){
-            int msgColIndex = c.getColumnIndex(MyOpenHelper.COL_MESSAGE);
-            int sOrRColIndex = c.getColumnIndex(MyOpenHelper.COL_SEND_OR_RECEIVE);
-            int idColIndex = c.getColumnIndex(MyOpenHelper.COL_ID);
+        public Message(String msgText, boolean isSend, long id) {
+            this.msgText = msgText;
+            this.isSend = isSend;
+            this.id = id;
+        }
 
-            String message = c.getString(msgColIndex);
-            int sendOrReceive = c.getInt(sOrRColIndex);
-            long id = c.getLong(idColIndex);
+        public String getText() {
+            return msgText;
+        }
 
-            String row=String.format("Message="+message+",SendOrReceive="+sendOrReceive+",id="+id);
-            Log.i("ROW VALUES", row);
+        public boolean isSend() {
+            return isSend;
+        }
 
-            c.moveToNext();}
-
-
-        Log.i("Database version", Integer.toString(inVersion));
-        Log.i("Number of columns", Integer.toString(columnNumber));
-        Log.i("Column names", Arrays.toString(columnNames));
-        Log.i("Number of rows", Integer.toString(rowNumber));
-
-    }
-
-
-    public class MyListAdapter extends BaseAdapter {
-
-        public int getCount() { return messagesList.size();}
-        public Object getItem(int position) { return messagesList.get(position).message; }
-        public long getItemId(int position) { return (long) position; }
-        public View getView(int position, View old, ViewGroup parent)
-        {
-            LayoutInflater inflater = getLayoutInflater();
-            if (messagesList.get(position).isSend){
-                View view1 = inflater.inflate(R.layout.send, parent, false);
-                EditText editText1 = view1.findViewById(R.id.text_send);
-                editText1.setText( getItem(position).toString() );
-                return view1;
-            }
-            else  {
-                View view2 = inflater.inflate(R.layout.receive, parent, false);
-                EditText editText2 = view2.findViewById(R.id.text_receive);
-                editText2.setText(getItem(position).toString());
-                return view2;
-            }
+        public long getID() {
+            return id;
         }
     }
+
+
+    class MyListAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return myMessages.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return myMessages.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+            LayoutInflater inflater = getLayoutInflater();
+            View thisRow;
+
+
+            if (myMessages.get(position).getSorR()) {
+                thisRow = inflater.inflate(R.layout.send, null);
+                TextView sendText = thisRow.findViewById(R.id.text_send);
+                sendText.setText(myMessages.get(position).getText());
+            } else {
+                thisRow = inflater.inflate(R.layout.receive, null);
+                TextView sendText = thisRow.findViewById(R.id.text_receive);
+                sendText.setText(myMessages.get(position).getText());
+            }
+
+
+            return thisRow;
+        }
+
+
+    }
+
+    private void loadDataFromDatabase() {
+        //get a database connection:
+        MyOpenHelper dbOpener = new MyOpenHelper(this);
+        db = dbOpener.getWritableDatabase(); //This calls onCreate() if you've never built the table before, or onUpgrade if the version here is newer
+
+
+        // We want to get all of the columns. Look at MyOpener.java for the definitions:
+        String[] columns = {MyOpenHelper.COL_ID, MyOpenHelper.COL_SEND_OR_RECEIVE, MyOpenHelper.COL_MESSAGE};
+        //query all the results from the database:
+        Cursor results = db.query(false, MyOpenHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+
+        //Now the results object has rows of results that match the query.
+        //find the column indices:
+        int senderColumnIndex = results.getColumnIndex(MyOpenHelper.COL_SEND_OR_RECEIVE);
+        int msgColIndex = results.getColumnIndex(MyOpenHelper.COL_MESSAGE);
+        int idColIndex = results.getColumnIndex(MyOpenHelper.COL_ID);
+
+        //iterate over the results, return true if there is a next item:
+        while (results.moveToNext()) {
+            int isSendInt = results.getInt(senderColumnIndex);
+            boolean isSend;
+            isSend = isSendInt == 1;
+            String message = results.getString(msgColIndex);
+            long id = results.getLong(idColIndex);
+
+            myMessages.add(new Messages(message, isSend, id));
+        }
+
+        printCursor(results, db.getVersion());
+    }
+
+    public void printCursor(Cursor c, int version) {
+        ArrayList<Messages> rowValue = new ArrayList<>();
+
+        int idIndex = c.getColumnIndex(MyOpenHelper.COL_ID);
+        int senderIndex = c.getColumnIndex(MyOpenHelper.COL_SEND_OR_RECEIVE);
+        int messageIndex = c.getColumnIndex(MyOpenHelper.COL_MESSAGE);
+
+
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            String msg = c.getString(messageIndex);
+            boolean sender = (c.getInt(senderIndex) != 0);
+            long id = c.getInt(idIndex);
+            rowValue.add(new Messages(msg, sender, id));
+            c.moveToNext();
+        }
+
+        Log.e("DATABASE VERSION", db.getVersion() + "");
+        Log.e("NUMBER OF COLUMNS", c.getColumnCount() + "");
+        Log.e("COLUMN NAMES", Arrays.toString(c.getColumnNames()));
+        Log.e("NUMBER OF ROWS", c.getCount() + "");
+        Log.e("EACH ROW OF RESULTS", rowValue.toString());
+
+    }
 }
+

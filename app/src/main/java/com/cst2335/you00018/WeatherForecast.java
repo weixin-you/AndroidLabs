@@ -41,7 +41,7 @@ public class WeatherForecast extends AppCompatActivity {
 
         ForecastQuery networkThread = new ForecastQuery();
         //this starts doInBackground on the other thread
-        networkThread.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
+        networkThread.execute("https://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
 
         currentTemperatureV = (TextView) findViewById(R.id.text_curr_temp);
         minTemperatureV = (TextView) findViewById(R.id.text_min_temp);
@@ -110,7 +110,7 @@ public class WeatherForecast extends AppCompatActivity {
 
                 //Start of JSON reading of UV
                 //create the network connection
-                URL uvUrl = new URL("http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+                URL uvUrl = new URL("https://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
                 HttpURLConnection UVConnection = (HttpURLConnection) uvUrl.openConnection();
                 inStream = UVConnection.getInputStream();
 
@@ -148,7 +148,7 @@ public class WeatherForecast extends AppCompatActivity {
                     Log.i(ACTIVITY_NAME, "Looking for file" + iconName + ".png");
                     Log.i(ACTIVITY_NAME, "Weather image does not exist, need to download");
 
-                    URL imageUrl = new URL("http://openweathermap.org/img/w/" + iconName + ".png");
+                    URL imageUrl = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
                     HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection();
                     connection.connect();
                     int responseCode = connection.getResponseCode();

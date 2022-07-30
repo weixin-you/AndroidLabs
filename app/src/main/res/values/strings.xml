@@ -23,5 +23,6 @@
     <string name="message_here">Message Here</string>
     <string name="view_id">ID=</string>
     <string name="one_send_message">Is a Send Message</string>
+    <string name="hide">HIDE</string>
 
 </resources>

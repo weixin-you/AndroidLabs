@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="7dp"
-        android:layout_marginBottom="50dp"
-        />
+        android:layout_marginBottom="50dp" />
 
 
     <Button
@@ -23,8 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/send_button"
-        />
+        android:text="@string/send_button" />
 
     <EditText
         android:id="@+id/editText"
@@ -40,8 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/editText"
-        android:text="@string/receive_button"
-        />
+        android:text="@string/receive_button" />
 
     <FrameLayout
         android:id="@+id/fragmentItem"
