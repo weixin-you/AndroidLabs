@@ -34,7 +34,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoomActivity";
     MyListAdapter myAdapter;
     SQLiteDatabase db;
-    MyOpenHelper MyOpener;
+    MyOpenHelper dbOpener;
 
 
     public class Messages {
@@ -93,7 +93,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             Log.i("inside", "inside listener");
 
             if (isTablet) {
-                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+//                DetailsFragment dFragment = new DetailsFragment();
                 Log.i("test", "get if there");
                 dFragment.setArguments(dataToPass); //pass it a bundle for information
                 getSupportFragmentManager()
@@ -244,7 +244,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private void loadDataFromDatabase() {
         //get a database connection:
-        MyOpenHelper dbOpener = new MyOpenHelper(this);
+        dbOpener = new MyOpenHelper(this);
         db = dbOpener.getWritableDatabase(); //This calls onCreate() if you've never built the table before, or onUpgrade if the version here is newer
 
 
