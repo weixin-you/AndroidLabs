@@ -82,7 +82,6 @@ public class ChatRoomActivity extends AppCompatActivity {
         ListView myList = findViewById(R.id.listView);
         myList.setAdapter(myAdapter);
         Log.i("before", "before listener");
-        Log.i("before", String.valueOf(isTablet));
 
         myList.setOnItemClickListener((list, view, position, id) -> {
             //Create a bundle to pass data to the new fragment
@@ -241,8 +240,6 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             return thisRow;
         }
-
-
     }
 
     private void loadDataFromDatabase() {
